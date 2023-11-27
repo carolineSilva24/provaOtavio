@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario{
+  nome      String @id @default(uuid())
+  email     String @unique
+  leilao    Leilao[]
+  lance     Lance[]
+}
+
+model Lance{
+  idlance     String @id @default(uuid()) 
+  comprador   Usuario @relation(fields: [compradorid], references: [nome])
+  compradorid String
+  leilao      Leilao @relation(fields: [leilaoid], references: [idleilao])
+  leilaoid    String 
+  valor       Float
+}
+
+model Leilao{
+  idleilao   String @id @default(uuid())
+  idProduto  String
+  preco      Float
+  datalimite DateTime @default(now())
+  dono       Usuario @relation(fields: [donoid], references: [nome])
+  donoid     String
+  lista_de_lances Lance[] 
+  lanceid    String
+}
