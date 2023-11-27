@@ -26,16 +26,6 @@ class LanceService {
         }
     }
 
-    // async listLance(){
-    //     try{
-    //         const lances = await prisma.lance.findMany();
-    //         return lances;
-    //     }catch(error){
-    //         console.log(error);
-    //         return null;
-    //     }
-    // }
-
     async createLance(lance: Prisma.LanceCreateInput){
         try{
             const newlance = await prisma.lance.create({
